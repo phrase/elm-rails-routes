@@ -25,7 +25,7 @@ var Elm = require("./dist/main.js");
 
 var worker = Elm.Main.worker();
 
-worker.ports.print.subscribe(function(data) {
+worker.ports.write.subscribe(function(data) {
   fs.writeFileSync("Routes.elm", data);
 });
 
