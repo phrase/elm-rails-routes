@@ -56,12 +56,12 @@ var generateElm = function(argv) {
       var filename = data["filename"];
       var content = data["content"];
 
-      mkdirp(filePath.join(path.sep), function(error) {
+      mkdirp([ config["source-directory"] ].concat(filePath).join(path.sep), function(error) {
         if (error) {
           console.log("could not create directories");
         } else {
           fs.writeFileSync(
-            filePath.join(path.sep) + path.sep + filename,
+            [ config["source-directory"] ].concat(filePath).join(path.sep) + path.sep + filename,
             content
           );
         }
