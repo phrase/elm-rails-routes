@@ -5,7 +5,6 @@
   "keywords": [],
   "main": "index.js",
   "dependencies": {
-    "node-elm-compiler": "^4.4.0",
     "yargs": "^11.0.0",
     "mkdirp": "^0.5.1"
   },

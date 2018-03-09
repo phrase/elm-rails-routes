@@ -1,6 +1,3 @@
-"use strict";
-
-const compile = require("node-elm-compiler").compile;
 const fs = require("fs");
 const path = require("path");
 const mkdirp = require("mkdirp");
@@ -38,9 +35,9 @@ var generateElm = function(argv) {
   fs.readFile("./elm-rails-routes.json", function(error, data) {
     if (error) {
       if (error["code"] == "ENOENT") {
-        console.log("I could not find the configuration file elm-rails-routes.json,")
-        console.log("please run\n")
-        console.log("  $ elm-rails-routes init\n")
+        console.log("I could not find the configuration file elm-rails-routes.json,");
+        console.log("please run\n");
+        console.log("  $ elm-rails-routes init\n");
       } else {
         console.log("There was a problem while reading the configuration:", error);
       }
@@ -103,7 +100,7 @@ const argv =
           .option("source-directory", {
             decribe: "where should the generated module be saved",
             default: "./src"
-          })
+          });
       },
       function(argv) {
         generateConfig(argv);
@@ -117,7 +114,7 @@ const argv =
           .option("routes", {
             describe: "where can we find the output of 'rails routes'?",
             default: "routes"
-          })
+          });
       },
       function(argv) {
         generateElm(argv);
