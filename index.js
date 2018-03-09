@@ -48,7 +48,7 @@ var generateElm = function(argv) {
     }
   
     var config = JSON.parse(data);
-  
+
     var worker = Elm.Main.worker(config);
     
     worker.ports.write.subscribe(function(data) {
@@ -68,9 +68,18 @@ var generateElm = function(argv) {
       });
     });
     
-    var routes = fs.readFileSync("./routes", "utf8");
-    
-    worker.ports.read.send(routes);
+    fs.readFile(argv["routes"], "utf8", function(error, data) {
+      if (error) {
+        if (error["code"] == "ENOENT") {
+          console.log("I could not find the routes file '" + argv["routes"] + "'.");
+        } else {
+          console.log("There was a problem while reading the routes file:", error);
+        }
+        process.exit(1);
+      }
+
+      worker.ports.read.send(data);
+    });
   });
 };
 
@@ -103,7 +112,13 @@ const argv =
     .command(
       "generate-elm",
       "convert the output of 'rails routes' into an Elm routes helper module",
-      function(yargs) {},
+      function(yargs) {
+        yargs
+          .option("routes", {
+            describe: "where can we find the output of 'rails routes'?",
+            default: "routes"
+          })
+      },
       function(argv) {
         generateElm(argv);
       }
