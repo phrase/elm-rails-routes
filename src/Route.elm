@@ -2,14 +2,18 @@ module Route
     exposing
         ( Route
         , asElm
+        , filter
         , parse
         )
 
 import Char
 import Parser exposing ((|.), (|=), Parser)
+import Scope exposing (Path, Scope)
 import String.Extra as String
 
 
+{-| Opaque type modeling a Rails route.
+-}
 type Route
     = Route RouteData
 
@@ -34,6 +38,23 @@ type alias Uri =
     List UriPart
 
 
+uriToPath : Uri -> Path
+uriToPath uri =
+    uri
+        |> List.filterMap
+            (\uriPart ->
+                case uriPart of
+                    Verbatim name ->
+                        Just (Scope.Verbatim name)
+
+                    Resource _ ->
+                        Just Scope.Anything
+
+                    Dot ->
+                        Nothing
+            )
+
+
 type UriPart
     = Verbatim String
     | Resource String
@@ -49,6 +70,22 @@ parse line =
     line
         |> Parser.run routeParser
         |> Result.toMaybe
+
+
+filter :
+    { include : Scope
+    , exclude : Scope
+    }
+    -> Route
+    -> Maybe Route
+filter { include, exclude } ((Route routeData) as route) =
+    if
+        Scope.contains (uriToPath routeData.uri) include
+            && not (Scope.contains (uriToPath routeData.uri) exclude)
+    then
+        Just route
+    else
+        Nothing
 
 
 {-| Generate the Elm code for a route path helper function

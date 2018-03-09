@@ -4,8 +4,10 @@ port module Ports
         , write
         )
 
+import Json.Decode exposing (Value)
+
 
 port read : (String -> msg) -> Sub msg
 
 
-port write : String -> Cmd msg
+port write : Value -> Cmd msg
