@@ -1,7 +1,7 @@
 {
-  "name": "elm-routes-generator",
-  "version": "0.0.1",
-  "description": "Generate Elm routes modules from Rails",
+  "name": "elm-rails-routes",
+  "version": "1.0.0",
+  "description": "Generate an Elm routes module from Rails",
   "keywords": [],
   "main": "index.js",
   "dependencies": {
@@ -11,10 +11,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/phrase/elm-routes-generator"
+    "url": "https://github.com/phrase/elm-rails-routes"
   },
-  "license": "Apache-2.0",
+  "license": "MIT",
   "bin": {
-    "elm-routes": "index.js"
+    "elm-rails-routes": "index.js"
   }
 }
