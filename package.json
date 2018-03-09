@@ -1,6 +1,6 @@
 {
   "name": "elm-rails-routes",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Generate an Elm routes module from Rails",
   "keywords": [],
   "main": "index.js",
